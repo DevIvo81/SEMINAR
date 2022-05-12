@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Name
+{% endblock title %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Hej {{ name }} - {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    
+{% endfor %}
+
+
+
+{% if name %}
+    <h1>Pozdrav {{ name }}...!!</h1>
+    <br>
+    <img src="{{ url_for('static', filename='pics/03-luk-vlasac-300x300.jpg') }}" alt="">
+
+
+{% else %}
+    <h1>Vaše ime je...?</h1>
+    <br>
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control") }}
+
+        {{ form.submit(class="btn btn-secondary my-2") }}
+
+    </form>
+
+
+
+{% endif %}
+
+{% endblock content%}

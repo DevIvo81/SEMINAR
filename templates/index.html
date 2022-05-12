@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Index
+{% endblock title %}
+
+{% block content %}
+
+<h1>Hello, world!</h1>
+
+<p>Moja web stranica</p>
+<p>Moje ime je {{ first_name }}</p>
+<p>{{ stuff|striptags }}</p>
+
+
+<h3>Favorite Pizza:</h3>
+
+{% for topping in favorite_pizza %}
+    {% if topping == 41 %}
+        {{ topping + 100 }}
+    {% else %}    
+        {{ topping }} <br>
+    {% endif %}
+{% endfor %}
+
+{% endblock content%}
