@@ -24,7 +24,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     
-    ime = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -40,21 +40,72 @@ class Tegla(db.Model):
     vlaznost = db.Column(db.Float)
     pH = db.Column(db.Float)
     
-    
+
 class Biljka(db.Model):
     __tablename__ = 'biljke'
     id = db.Column(db.Integer, primary_key=True)
     
-    ime = db.Column(db.String(300), nullable=False)
-    photo = db.Column(db.String(300), nullable=False)
-    
-    svjetlost = db.Column(db.String(100), nullable=False)
-    
-    
-    
-    
-    
+    name = db.Column(db.String(300), nullable=False)
+    photo = db.Column(db.String(300), nullable=False, default='default.jpg')
 #endregion MODELS
+
+
+# db.create_all()
+
+plants_list = [
+    {
+        'name' : 'Bosiljak',
+        'photo' : '01-bosiljak1-300x300.jpg',
+
+    },
+    {
+        'name' : 'Korijander',
+        'photo' : '02-korijandar2-300x300.jpg',
+
+    },
+    {
+        'name' : 'Vlasac',
+        'photo' : '03-luk-vlasac-300x300.jpg',
+    },
+    {
+        'name' : 'Mažuran',
+        'photo' : '04-mazuran1-300x300.jpg',
+    }
+]
+
+
+# plant = Biljka()
+
+# for p in plants_list:
+#     plant = Biljka(
+#         name=p['name'],
+#         photo=p['photo']
+#     )
+#     db.session.add(plant)
+#     db.session.commit()
+    
+
+
+jars = [
+    {
+        'lokacija' : 'Kuhinja',
+        'biljka' : 'peršin',
+        'status' : 'dodati vode'
+    },
+    {
+        'lokacija' : 'terasa',
+        'biljka' : 'kadulja',
+        'status' : 'ok'
+    },
+    {
+        'lokacija' : 'terasa',
+        'biljka' : 'None',
+        'status' : 'prazna posuda'
+    }
+]
+
+
+
 
 
 #region FORMS
@@ -124,6 +175,13 @@ def add_user():
         
     return render_template('add_user.html',
                             form=form)
+
+@app.route('/plants')
+def plants():
+    biljke_list = Biljka.query.order_by(Biljka.id)
+        
+    return render_template('plants.html',
+                            biljke_list=biljke_list)
 
 #endregion ROUTES
 
