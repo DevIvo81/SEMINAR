@@ -14,7 +14,10 @@
 
         <h1>Pozdrav {{ name|capitalize }}</h1>
         <br>
-        <img src="{{ url_for('static', filename='pics/tenica.png') }}" alt="">
+        <img src="{{ url_for('static', filename='pics/tenica.png') }}" alt="" width="400">
+        <br><br>
+        <p id="demo">Ovo je nekaj pod #demo...</p>
+
 
 
     {% else %}
@@ -29,7 +32,7 @@
 
             {{ form.submit(class="btn btn-secondary my-2") }}
         </form>
-        
+
     {% endif %}
 
 {% endblock content%}

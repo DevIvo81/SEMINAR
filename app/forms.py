@@ -8,7 +8,7 @@ class NamerForm(FlaskForm):
     submit = SubmitField('Dodaj ime')
 
 class UserForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(min=6, max=20)])
+    name = StringField('Name', validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     picture = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png', 'svg'])])
     submit = SubmitField('Dodaj korisnika')

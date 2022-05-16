@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Add User
+    Update User
 {% endblock title %}
 
 
@@ -10,7 +10,7 @@
 {% include 'flashes.html' %}
 
 {% if name %}
-    <h1>Korisnik {{ name }} dodan...!!</h1>
+    <h1>Ažuriranje korisnika!</h1>
     <br><br>
     <table class="table table-hover table-bordered table-striped">        
         {% for user in all_users %}
@@ -24,12 +24,11 @@
             </tr>    
         {% endfor %}
     </table>
-
     
 {% else %}
 
 <!-- FORM GOES HERE -->
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="/update/{{ name_to_update.id }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
@@ -44,7 +43,7 @@
                         {% endfor %}
                     </div>
             {% else %}
-                    {{ form.name(class="form-control form-control-lg") }}
+                    {{ form.name(class="form-control form-control-lg", value=name_to_update.name) }}
             {% endif %}
         </div>
         
@@ -59,7 +58,7 @@
                         {% endfor %}
                     </div>
             {% else %}
-                    {{ form.email(class="form-control form-control-lg") }}
+                    {{ form.email(class="form-control form-control-lg ", value=name_to_update.email) }}
             {% endif %}
         </div>
 
@@ -85,15 +84,15 @@
 
 <br>
 
-<h3>User List:</h3>
+<h3>Ažuriraj korisnika...</h3>
 <br>
 
 <table class="table table-hover table-bordered table-striped">        
     {% for user in all_users %}
         <tr>
             <td>
-                {{ user.id }}. <a href="{{ url_for('update', id=user.id) }}">
-                {{ user.name }}</a> - 
+                {{ user.id }}. 
+                {{ user.name }} - 
                 {{ user.email }} - 
                 {{ moment(user.date_added).format('LLLL') }}        
             </td>
