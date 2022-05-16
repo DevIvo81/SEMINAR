@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Jars
+{% endblock title %}
+
+
+{% block content %}
+
+{% for jar in jars %}
+
+<div class="card mt-3" style="width: 20rem;">
+    <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ jar.name }}</h5>
+        
+        <p class="card-text">
+            Temperatura = {{ temp }}°C, Vlažnost = {{ hum }}%
+        </p>
+            <a href="{{ url_for('jar_details', jar_id=jar.id)}}" class="btn btn-primary">Jar Details</a>
+        </div>
+    </div>
+
+{% endfor %}
+    
+{% endblock content %}

@@ -7,5 +7,7 @@
 {% block content %}
 
 <h1>Hello {{ user_name|capitalize }}!</h1>
+<br>
+<img src="{{ url_for('static', filename='pics/default.jpg') }}" alt="">
 
 {% endblock content %}
