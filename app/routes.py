@@ -2,7 +2,7 @@ from datetime import datetime
 from random import choice
 from flask import render_template, flash, url_for, redirect, request
 from . import app, db
-from .forms import NamerForm, UserForm
+from .forms import NamerForm, UserForm, JarForm
 from .models import User, Jar, Plant
 
 #region USER ROUTES
@@ -51,18 +51,50 @@ def add_user():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = User(name=form.name.data, email=form.email.data)
+            user = User(name=form.name.data, email=form.email.data, favorite_plant=form.favorite_plant.data)
             db.session.add(user)
             db.session.commit()
         name = form.name.data
         form.name.data = ''
         form.email.data = ''
+        form.favorite_plant.data = ''
         flash(f'Korisnik { user.name } uspješno dodan!', category='success')
     
     all_users = User.query.all()
     return render_template('users/add_user.html',
                             form=form,
+                            name=name,
                             all_users=all_users)
+
+# # Update database record - id is passed to function
+# @app.route('/update/<int:id>', methods=['GET', 'POST'])
+# def update(id):
+#     #? ... taking form for user to be updated
+#     form = UserForm()
+#     #? ... Query User by id
+#     name_to_update = User.query.get_or_404(id)
+#     # ... checking if anything was posted by user
+#     if request.method == 'POST':
+#         name_to_update.name = request.form['name']
+#         name_to_update.email = request.form['email']
+#         try:
+#             db.session.commit()
+#             flash('Ažuriranje uspješno!', category='success')
+#             return render_template('users/update.html',
+#                                 form=form,
+#                                 name_to_update=name_to_update)
+#         except:
+#             flash('Nešto ne štima...!', category='danger')
+#             return render_template('users/update.html',
+#                                 form=form,
+#                                 name_to_update=name_to_update)
+#     else:
+#         return render_template('users/update.html',
+#                                 form=form,
+#                                 name_to_update=name_to_update)
+        
+# TODO: TRY TO MAKE UPDATE FUNCTION WITH if form.validate_on_submit():
+#? DONE!
 
 # Update database record - id is passed to function
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -71,10 +103,10 @@ def update(id):
     form = UserForm()
     #? ... Query User by id
     name_to_update = User.query.get_or_404(id)
-    # ... checking if anything was posted by user
-    if request.method == 'POST':
-        name_to_update.name = request.form['name']
-        name_to_update.email = request.form['email']
+    if form.validate_on_submit():
+        name_to_update.name = form.name.data
+        name_to_update.email = form.email.data
+        name_to_update.favorite_plant = form.favorite_plant.data
         try:
             db.session.commit()
             flash('Ažuriranje uspješno!', category='success')
@@ -90,8 +122,6 @@ def update(id):
         return render_template('users/update.html',
                                 form=form,
                                 name_to_update=name_to_update)
-        
-# TODO: TRY TO MAKE UPDATE FUNCTION WITH if form.validate_on_submit():
 
 #endregion USER ROUTES
 
@@ -149,3 +179,22 @@ def page_not_found(err):
 def page_not_found(err):
         return render_template('err/500.html'), 500
 #endregion CUSTOM ERROR PAGES
+
+
+@app.route('/pok_sve')
+def pok_sve():
+    plants = Plant.query.order_by(Plant.id)
+    return render_template('pok_sve.html',
+                        plants=plants)
+
+@app.route('/pok_jedna/<int:plant_id>')
+def pok_jedna(plant_id):
+    plant = Plant.query.get(plant_id)
+    return render_template('pok_jedna.html',
+                        plant=plant)
+
+# TODO - UPDATE ROUTE
+
+@app.route('/update_jedna/<int:plant_id>', methods=['GET', 'POST'])
+def update_jedna():
+    form = UpdateJednaForm()

@@ -18,7 +18,8 @@
                 <td>
                     {{ user.id }}. <a href="{{ url_for('update', id=user.id) }}">
                     {{ user.name }}</a> - 
-                    {{ user.email }} - 
+                    {{ user.email }} -
+                    {{ user.favorite_plant }} 
                     {{ moment(user.date_added).format('LLLL') }}        
                 </td>
             </tr>    
@@ -72,11 +73,21 @@
                 {% endfor %}
             {% endif %}
         </div>
+
+        <div class="form-group">
+            {{ form.favorite_plant.label() }}<br>
+            {{ form.favorite_plant(class="form-control-file") }}
+            {% if form.favorite_plant.errors %}
+                {% for error in form.favorite_plant.errors %}
+                    <span class="text-danger">{{ error }}</span><br>
+                {% endfor %}
+            {% endif %}
+        </div>
         
         <br>
         
         <div class="form-group">
-        {{ form.submit(class="btn btn-secondary my-2") }}
+        {{ form.submit(class="btn btn-secondary my-2", value="Ažuriraj korisnika") }}
         </div>
         
     </form>
@@ -84,7 +95,7 @@
 
 <br>
 
-<h3>Ažuriraj korisnika...</h3>
+
 <br>
 
 <table class="table table-hover table-bordered table-striped">        

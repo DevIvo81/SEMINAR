@@ -22,10 +22,9 @@ Plant Details
             <!-- Preview image figure-->
             <figure class="mb-4"><img class="img-fluid rounded" src="{{ url_for('static', filename='pics/' + plant.photo) }}" alt="..." /></figure>
             <!-- Post content-->
-            <section class="mb-5">
-                <p class="fs-5 mb-4">
-                    {{ plant.name }}
-                </p>
+            <section class="mb-5">    
+            <a href="{{ url_for('plants')}}" class="btn btn-info">Back</a>
+            
             </section>
         </article>
         

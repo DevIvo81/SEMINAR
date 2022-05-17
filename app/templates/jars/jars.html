@@ -15,7 +15,8 @@ Jars
         <h5 class="card-title">{{ jar.name }}</h5>
         
         <p class="card-text">
-            Temperatura = {{ temp }}°C, Vlažnost = {{ hum }}%
+            Temperatura = {{ temp }}°C
+            Vlažnost = {{ hum }}%
         </p>
             <a href="{{ url_for('jar_details', jar_id=jar.id)}}" class="btn btn-primary">Jar Details</a>
         </div>

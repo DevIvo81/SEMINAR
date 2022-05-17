@@ -11,5 +11,10 @@ class UserForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     picture = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png', 'svg'])])
-    submit = SubmitField('Dodaj korisnika')
+    favorite_plant = StringField('Favorite Plant', validators=[DataRequired()])
     
+    submit = SubmitField('Dodaj korisnika')
+
+# TODO - JAR UPDATE FORM
+class JarUpdateForm(FlaskForm):
+    pass

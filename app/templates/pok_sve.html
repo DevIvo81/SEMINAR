@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    POKUŠAJI
+{% endblock %}
+
+{% block content %}
+    <h4>Sve kartice</h4>
+    <div class="card-body">
+        <a href="#" class="btn btn-info">Dodaj novu karticu</a>
+        <a href="#" class="btn btn-warning">SYNC</a>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+    </div>
+
+<!-- Content Row-->
+<div class="row row-cols-1 row-cols-md-2 g-4">
+        
+    {% for plant in plants %}
+        <!-- POČETAK KARTICE -->
+        <div class="card mb-3" style="max-width: 600px;">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="{{ url_for('static', filename='pics/' + plant.photo) }}" class="img-fluid rounded-start m-2" alt="...">
+                </div>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Posuda {{ plant.id }}</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ plant.name }}</li>
+                            <br><br><br>
+                            <li class="list-group-item">STATUS</li>
+                            <li class="list-group-item">DODATI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('pok_jedna', plant_id=plant.id) }}" class="btn btn-info">View</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        <!-- Kraj KARTICE -->
+    {% endfor %}
+    
+</div>
+
+{% endblock content %}
+
