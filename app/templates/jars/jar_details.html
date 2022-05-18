@@ -8,44 +8,52 @@ Jar Details
 
 {% block content %}
 
-<div class="row">
-    <div class="col-lg-8">
-        <!-- Post content-->
-        <article>
-            <!-- Post header-->
-            <header class="mb-4">
-                <!-- Post title-->
-                <h1 class="fw-bolder mb-1">{{ jar.name }}</h1>
-                <!-- Post meta content-->
-                <div class="text-muted fst-italic mb-2">Posted on January 1, 2021 by Start Bootstrap</div>
-            </header>
-            <!-- Preview image figure-->
-            <figure class="mb-4"><img class="img-fluid rounded" src="{{ url_for('static', filename='pics/' + jar.photo) }}" alt="..." /></figure>
-            <!-- Post content-->
-            <section class="mb-5">
-                <p class="fs-5 mb-4">
-                    {{ jar.name }}
-                </p>
-            </section>
-        </article>
-        
-    
-        <!-- Info widget-->
-        <div class="card mb-4">
-            <div class="card-header">Info</div>
+<!-- POČETAK KARTICE -->
+<div class="card mb-3" style="max-width: 1000px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2" alt="...">
+        </div>
+        <div class="col-md-6">
             <div class="card-body">
-                <div class="container">
-                    <!-- INFO TEXT HERE -->
+                <a href="{{ url_for('plant_details', plant_id=plant.id, plant_name=plant.name) }}" target="_blank"><h5 class="card-title">{{ jar.plant_name }}</h5></a>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
+                    <li class="list-group-item">pH Faktor = {{ jar.pH_F }}</li>
+                    <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
+                    
+                    <br><br>
+                    
+                    {% if jar.temperature < plant.temperature %}
+                        <li class="list-group-item">STATUS Temperature = PREHLADNO</li>
+                    {% else %}
+                        <li class="list-group-item">STATUS Temperature = U REDU</li>
+                    {% endif %}
+                    
+                    
+                    {% if jar.pH_F < plant.pH_F %}
+                        <li class="list-group-item">STATUS pH = DODATI SUPSTRAT</li>
+                    {% else %}
+                        <li class="list-group-item">STATUS pH = U REDU</li>
+                    {% endif %}
+                    
 
-                </div>
+                    {% if jar.humidity < plant.humidity %}
+                        <li class="list-group-item">STATUS pH = DODATI VODE</li>   
+                    {% else %}
+                        <li class="list-group-item">STATUS pH = U REDU</li>    
+                    {% endif %}
+                </ul>
             </div>
         </div>
-        <!-- Info 2 widget-->
-        <div class="card mb-4">
-            <div class="card-header">Side Widget</div>
-            <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-        </div>
+    </div>
+    <div class="card-body">
+        <a href="{{ url_for('add_plant', jar_id=jar.id) }}" class="btn btn-info">Add Plant</a>
+        {% include 'modal_empty.html' %}
+        <a href="{{ url_for('jars')}}" class="btn btn-secondary">   Back to Jars</a>
     </div>
 </div>
+<!-- Kraj KARTICE -->
 
 {% endblock %}
+

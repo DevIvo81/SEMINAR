@@ -1,9 +1,11 @@
 from datetime import datetime
 from random import choice
 from flask import render_template, flash, url_for, redirect, request
+
 from . import app, db
-from .forms import NamerForm, UserForm, JarForm
+from .forms import NamerForm, UserForm, AddPlantForm
 from .models import User, Jar, Plant
+from . import get_all_readings
 
 #region USER ROUTES
 
@@ -136,33 +138,113 @@ def plants():
                             plants=plants)
     
 
-@app.route('/plant_details/<int:plant_id>')
-def plant_details(plant_id):
+@app.route('/plant_details/<int:plant_id>/<string:plant_name>')
+def plant_details(plant_id, plant_name):
     plant = Plant.query.get(plant_id)
     return render_template('plants/plant_details.html',
                             plant = plant)
 
 
-@app.route('/jars')
+@app.route('/jars', methods=['GET', 'POST'])
 def jars():
-    temperature = [x/10 for x in range(120, 355, 5)]
-    temp = choice(temperature)
-    
-    humidities = [x/10 for x in range(30, 100)]
-    hum = choice(humidities)
     
     jars = Jar.query.order_by(Jar.id)
-        
+    
+    for jar in jars:
+        plant = Jar.query.get(jar.id)
+    
     return render_template('jars/jars.html',
-                            jars=jars,
-                            temp = temp,
-                            hum=hum)
+                        jars = jars,
+                        plant=plant)
+
 
 @app.route('/jar_details/<int:jar_id>')
 def jar_details(jar_id):
+    
     jar = Jar.query.get(jar_id)
+    plant = Plant.query.filter_by(name=jar.plant_name).first()
+    
     return render_template('jars/jar_details.html',
-                            jar = jar)
+                            jar = jar,
+                            plant = plant)
+
+
+@app.route('/jar/add', methods=['GET', 'POST'])
+def add_jar():
+    
+    jar = Jar()
+    
+    db.session.add(jar)
+    db.session.commit()
+    
+    return redirect(url_for('jars'))
+
+
+@app.route('/jar/delete/<int:jar_id>', methods=['GET', 'POST'])
+def delete_jar(jar_id):
+    
+    jar = Jar.query.get(jar_id)
+    
+    db.session.delete(jar)
+    db.session.commit()
+    
+    return redirect(url_for('jars'))
+
+
+@app.route('/jar/add_plant/<int:jar_id>', methods=['GET', 'POST'])
+def add_plant(jar_id):
+    
+    form = AddPlantForm()
+    
+    if form.validate_on_submit():
+        # ... Fetching data
+        jar = Jar.query.get(jar_id)
+        plant = Plant.query.get(form.biljka.data)
+        
+        # ... Updating data
+        jar.plant_name = plant.name
+        jar.photo = plant.photo
+        
+        db.session.commit()
+        return redirect(url_for('jar_details', jar_id=jar.id))
+
+    all_plants = Plant.query.all()
+    
+    return render_template('jars/add_plant.html',
+                        form=form,
+                        all_plants=all_plants)
+
+
+@app.route('/jar/empty/<int:jar_id>', methods=['GET', 'POST'])
+def empty_jar(jar_id):
+    
+    jar = Jar.query.get(jar_id)
+    jar.plant_name = 'Plantless'
+    jar.photo = 'default.jpg'
+    
+    db.session.commit()
+    
+    return redirect(url_for('jar_details', jar_id=jar.id))
+
+
+@app.route('/jars/sync/', methods=['GET', 'POST'])
+def sync():
+    
+    jars = Jar.query.order_by(Jar.id)
+    
+    for jar in jars:
+        readings = get_all_readings()
+        jar.temperature = readings[0]
+        jar.pH_F = readings[1]
+        jar.humidity = readings[2]
+        
+        db.session.commit()
+    
+    return redirect(url_for('jars'))
+
+
+
+
 
 #endregion PLANTS AND JARS
 
@@ -179,22 +261,3 @@ def page_not_found(err):
 def page_not_found(err):
         return render_template('err/500.html'), 500
 #endregion CUSTOM ERROR PAGES
-
-
-@app.route('/pok_sve')
-def pok_sve():
-    plants = Plant.query.order_by(Plant.id)
-    return render_template('pok_sve.html',
-                        plants=plants)
-
-@app.route('/pok_jedna/<int:plant_id>')
-def pok_jedna(plant_id):
-    plant = Plant.query.get(plant_id)
-    return render_template('pok_jedna.html',
-                        plant=plant)
-
-# TODO - UPDATE ROUTE
-
-@app.route('/update_jedna/<int:plant_id>', methods=['GET', 'POST'])
-def update_jedna():
-    form = UpdateJednaForm()

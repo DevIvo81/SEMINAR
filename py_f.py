@@ -12,7 +12,7 @@ class Biljka(db.Model):
     naziv = db.Column(db.String)
     foto = db.Column(db.String) # ... putanja do slike
     
-    posude = db.relationship('Posuda', backref=('biljka'))
+    posude = db.relationship('Posuda', backref=('biljka'), lazy=True)
     
 
 class Posuda(db.Model):

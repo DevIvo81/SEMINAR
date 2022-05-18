@@ -8,43 +8,34 @@ Plant Details
 
 {% block content %}
 
-<div class="row">
-    <div class="col-lg-8">
-        <!-- Post content-->
-        <article>
-            <!-- Post header-->
-            <header class="mb-4">
-                <!-- Post title-->
-                <h1 class="fw-bolder mb-1">{{ plant.name }}</h1>
-                <!-- Post meta content-->
-                <div class="text-muted fst-italic mb-2">Posted on January 1, 2021 by Start Bootstrap</div>
-            </header>
-            <!-- Preview image figure-->
-            <figure class="mb-4"><img class="img-fluid rounded" src="{{ url_for('static', filename='pics/' + plant.photo) }}" alt="..." /></figure>
-            <!-- Post content-->
-            <section class="mb-5">    
-            <a href="{{ url_for('plants')}}" class="btn btn-info">Back</a>
-            
-            </section>
-        </article>
-        
+    <h4>Plant Details</h4>
     
-        <!-- Info widget-->
-        <div class="card mb-4">
-            <div class="card-header">Info</div>
-            <div class="card-body">
-                <div class="container">
-                    <!-- INFO TEXT HERE -->
-
+    <!-- Content Row-->
+    <!-- POČETAK KARTICE -->
+    <div class="card mb-3" style="max-width: 800px;">
+        <div class="row g-0">
+            <!-- IMAGE -->
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='pics/' + plant.photo) }}" class="img-fluid rounded-start m-2" alt="...">
+            </div>
+            <div class="col-md-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plant.name }}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Temperatura = {{ plant.temperature }} °C</li>
+                        <li class="list-group-item">pH = {{ plant.pH_F }}</li>
+                        <li class="list-group-item">Vlažnost = {{ plant.humidity }} %</li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <!-- Info 2 widget-->
-        <div class="card mb-4">
-            <div class="card-header">Side Widget</div>
-            <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-        </div>
     </div>
-</div>
+    <!-- Kraj KARTICE -->
+
+    <div class="card-body">
+        <a href="{{ url_for('plants') }}" class="btn btn-info">Back to plants</a>
+    </div>
+    
+    <br>
 
 {% endblock %}

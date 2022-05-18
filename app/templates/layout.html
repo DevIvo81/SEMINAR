@@ -36,7 +36,7 @@
     </script>
 
     <!-- Our JS -->
-    <script src="../static/js/scripts.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
     
     <!-- Date and Time formatting on html pages -->
     {{ moment.include_moment() }}

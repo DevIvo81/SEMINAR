@@ -15,6 +15,9 @@ class UserForm(FlaskForm):
     
     submit = SubmitField('Dodaj korisnika')
 
-# TODO - JAR UPDATE FORM
-class JarUpdateForm(FlaskForm):
-    pass
+class AddPlantForm(FlaskForm):
+    
+    biljka = IntegerField('Upiši id biljke', validators=[DataRequired()])
+    submit = SubmitField('Dodaj biljku')
+    
+    

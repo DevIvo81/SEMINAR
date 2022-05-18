@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db, migrate
+from . import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,21 +12,35 @@ class User(db.Model):
     def __repr__(self):
         return f"<User {self.name}>"
 
-class Jar(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    
-    biljka = db.Column(db.String(50), nullable=False, default='Prazna posuda')
-    photo = db.Column(db.String(100), nullable=False, default='default.jpg')
-    time_stamp = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 class Plant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
-    name = db.Column(db.String(300), nullable=False)
-    photo = db.Column(db.String(300), nullable=False, default='default.png')
+    name = db.Column(db.String(300), nullable=False, default='Plant name')
+    photo = db.Column(db.String(300), nullable=False, default='tenica.png')
+
+    temperature = db.Column(db.Integer, nullable=False, default=10)
+    pH_F = db.Column(db.Integer, nullable=False, default=7)
+    humidity = db.Column(db.Integer, nullable=False, default=44)
     
     def __repr__(self):
         return f"<Plant('id={self.id}', 'name={self.name}', 'photo={self.photo}')>"
+    
+    
+
+class Jar(db.Model):
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, default='Posuda') 
+        
+    plant_name = db.Column(db.String(50), default='Nema biljke')
+    photo = db.Column(db.String(300), nullable=False, default='default.jpg')
+    
+    temperature = db.Column(db.Integer, nullable=False, default=10)
+    pH_F = db.Column(db.Integer, nullable=False, default=7)
+    humidity = db.Column(db.Integer, nullable=False, default=44)
+    
 
 
 

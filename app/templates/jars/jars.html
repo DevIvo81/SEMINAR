@@ -7,21 +7,80 @@ Jars
 
 {% block content %}
 
-{% for jar in jars %}
-
-<div class="card mt-3" style="width: 20rem;">
-    <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{ jar.name }}</h5>
+<div class="container">
+    <header class="blog-header">
+        <div class="text-end">
         
-        <p class="card-text">
-            Temperatura = {{ temp }}°C
-            Vlažnost = {{ hum }}%
-        </p>
-            <a href="{{ url_for('jar_details', jar_id=jar.id)}}" class="btn btn-primary">Jar Details</a>
+            <div class="container-sm">
+                <a href="{{ url_for('sync') }}" class="btn btn-warning">SYNC</a>
+                <br><br>
+                <a href="{{ url_for('add_jar') }}" class="btn btn-info">Add New Jar</a>
+            </div>
         </div>
-    </div>
+    </header>
+<br>
 
-{% endfor %}
-    
+
+<!-- Content Row-->
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+            
+        {% for jar in jars %}
+            <!-- POČETAK KARTICE -->
+            <div class="card mb-3" style="max-width: 600px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2" alt="...">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">                           
+                            <h5 class="card-title">{{ jar.plant_name }}</h5>
+                            
+                            <br>
+                            
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
+                                <li class="list-group-item">pH Faktor = {{ jar.pH_F }}</li>
+                                <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                <br>
+                
+                <div class="row g-0">
+                    <ul class="list-group list-group-flush">
+                        {% if jar.temperature < plant.temperature %}
+                            <li class="list-group-item">STATUS Temperature = PREHLADNO</li>
+                        {% else %}
+                            <li class="list-group-item">STATUS Temperature = U REDU</li>
+                        {% endif %}
+                        
+                        
+                        {% if jar.pH_F < plant.pH_F %}
+                            <li class="list-group-item">STATUS pH = DODATI SUPSTRAT</li>
+                        {% else %}
+                            <li class="list-group-item">STATUS pH = U REDU</li>
+                        {% endif %}
+                        
+                        
+                        {% if jar.humidity < plant.humidity %}
+                            <li class="list-group-item">STATUS pH = DODATI VODE</li>   
+                        {% else %}
+                            <li class="list-group-item">STATUS pH = U REDU</li>    
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('jar_details', jar_id=jar.id) }}" class="btn btn-info">Edit</a>
+                    {% include'modal_delete.html' %}
+                </div>
+            </div>
+            <!-- Kraj KARTICE -->
+        {% endfor %}       
+    </div>
 {% endblock content %}
+
