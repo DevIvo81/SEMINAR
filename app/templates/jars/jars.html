@@ -14,7 +14,15 @@ Jars
             <div class="container-sm">
                 <a href="{{ url_for('sync') }}" class="btn btn-warning">SYNC</a>
                 <br><br>
-                <a href="{{ url_for('add_jar') }}" class="btn btn-info">Add New Jar</a>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+
+                    {{ form.name.label() }}
+                    {{ form.name(class="form-control-sm") }}
+
+                    {{ form.submit(class="btn btn-info") }}
+
+                </form>
             </div>
         </div>
     </header>
@@ -32,16 +40,27 @@ Jars
                         <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2" alt="...">
                     </div>
                     <div class="col-md-6">
-                        <div class="card-body">                           
+                        <div class="card-body">
+                            <h4 class="card-title">{{ jar.name|capitalize }}</h4>   
+                            <br>                        
                             <h5 class="card-title">{{ jar.plant_name }}</h5>
                             
                             <br>
-                            
+                        {% if jar.plant_name != 'Plantless' %}
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
-                                <li class="list-group-item">pH Faktor = {{ jar.pH_F }}</li>
+                                <li class="list-group-item">pH Faktor = {{ jar.phf }}</li>
                                 <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
                             </ul>
+                        
+                        {% else %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Temperatura = offline</li>
+                                <li class="list-group-item">pH Faktor = offline</li>
+                                <li class="list-group-item">Vlažnost = offline</li>
+                            </ul>
+                        {% endif %}
+
                         </div>
 
                     </div>
@@ -51,32 +70,12 @@ Jars
 
                 <br>
                 
-                <div class="row g-0">
-                    <ul class="list-group list-group-flush">
-                        {% if jar.temperature < plant.temperature %}
-                            <li class="list-group-item">STATUS Temperature = PREHLADNO</li>
-                        {% else %}
-                            <li class="list-group-item">STATUS Temperature = U REDU</li>
-                        {% endif %}
-                        
-                        
-                        {% if jar.pH_F < plant.pH_F %}
-                            <li class="list-group-item">STATUS pH = DODATI SUPSTRAT</li>
-                        {% else %}
-                            <li class="list-group-item">STATUS pH = U REDU</li>
-                        {% endif %}
-                        
-                        
-                        {% if jar.humidity < plant.humidity %}
-                            <li class="list-group-item">STATUS pH = DODATI VODE</li>   
-                        {% else %}
-                            <li class="list-group-item">STATUS pH = U REDU</li>    
-                        {% endif %}
-                    </ul>
-                </div>
+                
                 <div class="card-body">
-                    <a href="{{ url_for('jar_details', jar_id=jar.id) }}" class="btn btn-info">Edit</a>
+                    <a href="{{ url_for('jar_details', jar_id=jar.id) }}" class="btn btn-info">Details</a>
+                    
                     {% include'modal_delete.html' %}
+
                 </div>
             </div>
             <!-- Kraj KARTICE -->

@@ -4,11 +4,15 @@
 Jar Details
 {% endblock %}
 
-
-
 {% block content %}
 
 <!-- POČETAK KARTICE -->
+<div class="container-sm">
+    <a href="{{ url_for('sync_jar', jar_id=jar.id) }}" class="btn btn-warning">SYNC</a>
+</div>
+
+<br>
+
 <div class="card mb-3" style="max-width: 1000px;">
     <div class="row g-0">
         <div class="col-md-4">
@@ -16,13 +20,27 @@ Jar Details
         </div>
         <div class="col-md-6">
             <div class="card-body">
-                <a href="{{ url_for('plant_details', plant_id=plant.id, plant_name=plant.name) }}" target="_blank"><h5 class="card-title">{{ jar.plant_name }}</h5></a>
-                <ul class="list-group list-group-flush">
+                <h4 class="card-title">{{ jar.name|capitalize }}</h4>
+                
+                <br>
+                
+                {% if plant %}
+                    <a href="{{ url_for('plant_details', plant_id=plant.id, plant_name=plant.name) }}" target="_blank">
+                        <h5>{{ plant.name }}
+                    </a>
+                {% else %}
+                    <h5>Plantless</h5>
+                {% endif %}
+                
+                <br><br>
+                <ul class="list-group">
                     <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
-                    <li class="list-group-item">pH Faktor = {{ jar.pH_F }}</li>
+                    <li class="list-group-item">pH Faktor = {{ jar.phf }}</li>
                     <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
                     
                     <br><br>
+                
+                    {% if jar.plant_name != 'Plantless' %}    
                     
                     {% if jar.temperature < plant.temperature %}
                         <li class="list-group-item">STATUS Temperature = PREHLADNO</li>
@@ -31,7 +49,7 @@ Jar Details
                     {% endif %}
                     
                     
-                    {% if jar.pH_F < plant.pH_F %}
+                    {% if jar.phf < plant.phf %}
                         <li class="list-group-item">STATUS pH = DODATI SUPSTRAT</li>
                     {% else %}
                         <li class="list-group-item">STATUS pH = U REDU</li>
@@ -39,13 +57,21 @@ Jar Details
                     
 
                     {% if jar.humidity < plant.humidity %}
-                        <li class="list-group-item">STATUS pH = DODATI VODE</li>   
+                        <li class="list-group-item">STATUS Vlage = DODATI VODE</li>   
                     {% else %}
-                        <li class="list-group-item">STATUS pH = U REDU</li>    
+                        <li class="list-group-item">STATUS Vlage = U REDU</li>    
                     {% endif %}
+                
+                {% else %}
+                    <li class="list-group-item">STATUS Temperature = NONE</li>
+                    <li class="list-group-item">STATUS pH = NONE</li>
+                    <li class="list-group-item">STATUS Vlage = NONE</li>
+                {% endif %}
+                    
                 </ul>
             </div>
         </div>
+        
     </div>
     <div class="card-body">
         <a href="{{ url_for('add_plant', jar_id=jar.id) }}" class="btn btn-info">Add Plant</a>

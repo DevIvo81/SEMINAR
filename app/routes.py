@@ -3,127 +3,51 @@ from random import choice
 from flask import render_template, flash, url_for, redirect, request
 
 from . import app, db
-from .forms import NamerForm, UserForm, AddPlantForm
+from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm
 from .models import User, Jar, Plant
 from . import get_all_readings
 
+
 #region USER ROUTES
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    first_name = "Ivo"
-    current_date = datetime.utcnow()
-    stuff = "This is bold text"
     
-    flash('Dobrodošli na PyFlora stranicu!', category='info')
+    form = LoginForm()
     
-    favorite_pizza =     ['Šunka', 'Sir', 'Gljive', 41]
-    return render_template('home/index.html',
-                        first_name=first_name,
-                        stuff=stuff,
-                        favorite_pizza=favorite_pizza,
-                        current_date=current_date)
-
-@app.route('/user/<name>')
-def user(name):
-    return render_template('users/user.html',
-                            user_name=name)
-
-
-@app.route('/name', methods=['GET', 'POST'])
-def name():
-    name = None
-    form = NamerForm()
-    
-    # Validate Form
     if form.validate_on_submit():
-        name = form.name.data #... Take submitted text and store it to 'name'
-        form.name.data = '' # ... Reset text in form cell
-        flash(f'Bravo {name.capitalize()}... Forma uspješno ispunjena!', category='success')
+        user = User.query.filter_by(name=form.name.data).first()
+        if user:
+            flash(f'Dobrodošli { user.name } u IZ_PyFlora aplikaciju!', category='success')
+            return redirect(url_for('jars'))
+        else:
+            flash('Nepostojeći korisnik!', category='danger')
+            return redirect(url_for('index'))
+    
+    return render_template('home/index.html', 
+                            form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    
+    form = RegistrationForm()
+    
+    if form.validate_on_submit():
         
-    return render_template('users/name.html',
-                        name=name,
-                        form=form)
-
-@app.route('/user/add', methods=['POST', 'GET'])
-def add_user():
-    name = None
-    form = UserForm()
+        user = User(
+            name = form.name.data,
+            password = form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Korisnik dodan u bazu!', category='success')
+        return redirect(url_for('index'))
     
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user is None:
-            user = User(name=form.name.data, email=form.email.data, favorite_plant=form.favorite_plant.data)
-            db.session.add(user)
-            db.session.commit()
-        name = form.name.data
-        form.name.data = ''
-        form.email.data = ''
-        form.favorite_plant.data = ''
-        flash(f'Korisnik { user.name } uspješno dodan!', category='success')
-    
-    all_users = User.query.all()
-    return render_template('users/add_user.html',
-                            form=form,
-                            name=name,
-                            all_users=all_users)
+    return render_template('home/register.html', 
+                            form=form)
 
-# # Update database record - id is passed to function
-# @app.route('/update/<int:id>', methods=['GET', 'POST'])
-# def update(id):
-#     #? ... taking form for user to be updated
-#     form = UserForm()
-#     #? ... Query User by id
-#     name_to_update = User.query.get_or_404(id)
-#     # ... checking if anything was posted by user
-#     if request.method == 'POST':
-#         name_to_update.name = request.form['name']
-#         name_to_update.email = request.form['email']
-#         try:
-#             db.session.commit()
-#             flash('Ažuriranje uspješno!', category='success')
-#             return render_template('users/update.html',
-#                                 form=form,
-#                                 name_to_update=name_to_update)
-#         except:
-#             flash('Nešto ne štima...!', category='danger')
-#             return render_template('users/update.html',
-#                                 form=form,
-#                                 name_to_update=name_to_update)
-#     else:
-#         return render_template('users/update.html',
-#                                 form=form,
-#                                 name_to_update=name_to_update)
-        
-# TODO: TRY TO MAKE UPDATE FUNCTION WITH if form.validate_on_submit():
-#? DONE!
 
-# Update database record - id is passed to function
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    #? ... taking form for user to be updated
-    form = UserForm()
-    #? ... Query User by id
-    name_to_update = User.query.get_or_404(id)
-    if form.validate_on_submit():
-        name_to_update.name = form.name.data
-        name_to_update.email = form.email.data
-        name_to_update.favorite_plant = form.favorite_plant.data
-        try:
-            db.session.commit()
-            flash('Ažuriranje uspješno!', category='success')
-            return render_template('users/update.html',
-                                form=form,
-                                name_to_update=name_to_update)
-        except:
-            flash('Nešto ne štima...!', category='danger')
-            return render_template('users/update.html',
-                                form=form,
-                                name_to_update=name_to_update)
-    else:
-        return render_template('users/update.html',
-                                form=form,
-                                name_to_update=name_to_update)
+
 
 #endregion USER ROUTES
 
@@ -148,14 +72,22 @@ def plant_details(plant_id, plant_name):
 @app.route('/jars', methods=['GET', 'POST'])
 def jars():
     
+    
+    form = AddJarForm()
+    
+    one_jar = Jar()
+    
+    if form.validate_on_submit():
+        one_jar.name = form.name.data
+        db.session.add(one_jar)
+        db.session.commit()
+        flash('Posuda dodana!', category='success')
+    
     jars = Jar.query.order_by(Jar.id)
     
-    for jar in jars:
-        plant = Jar.query.get(jar.id)
-    
     return render_template('jars/jars.html',
-                        jars = jars,
-                        plant=plant)
+                        jars=jars,
+                        form=form)
 
 
 @app.route('/jar_details/<int:jar_id>')
@@ -167,17 +99,6 @@ def jar_details(jar_id):
     return render_template('jars/jar_details.html',
                             jar = jar,
                             plant = plant)
-
-
-@app.route('/jar/add', methods=['GET', 'POST'])
-def add_jar():
-    
-    jar = Jar()
-    
-    db.session.add(jar)
-    db.session.commit()
-    
-    return redirect(url_for('jars'))
 
 
 @app.route('/jar/delete/<int:jar_id>', methods=['GET', 'POST'])
@@ -227,7 +148,7 @@ def empty_jar(jar_id):
     return redirect(url_for('jar_details', jar_id=jar.id))
 
 
-@app.route('/jars/sync/', methods=['GET', 'POST'])
+@app.route('/jars/sync/')
 def sync():
     
     jars = Jar.query.order_by(Jar.id)
@@ -242,9 +163,20 @@ def sync():
     
     return redirect(url_for('jars'))
 
-
-
-
+@app.route('/jar/sync/<int:jar_id>', methods=['GET', 'POST'])
+def sync_jar(jar_id):
+    
+    jar = Jar.query.get(jar_id)
+    
+    readings = get_all_readings()
+    
+    jar.temperature = readings[0]
+    jar.pH_F = readings[1]
+    jar.humidity = readings[2]
+    
+    db.session.commit()
+    
+    return redirect(url_for('jar_details', jar_id=jar.id))
 
 #endregion PLANTS AND JARS
 
