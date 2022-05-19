@@ -16,9 +16,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/DEJTA.sqlite'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password123@localhost/our_users'
 
 
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = 'mojsupertajnikljuc'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 moment = Moment(app)
 
