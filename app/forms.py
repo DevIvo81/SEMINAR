@@ -10,6 +10,7 @@ class NamerForm(FlaskForm):
 class UserForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
     picture = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png', 'svg'])])
     favorite_plant = StringField('Favorite Plant', validators=[DataRequired()])
     

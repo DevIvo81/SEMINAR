@@ -4,10 +4,12 @@ from . import db
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     picture = db.Column(db.String(300), nullable=False, default='default.jpg')
     favorite_plant = db.Column(db.String(120))
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
     
     def __repr__(self):
         return f"<User {self.name}>"
