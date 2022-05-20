@@ -12,7 +12,7 @@ Jars
         <div class="text-end">
         
             <div class="container-sm">
-                <a href="{{ url_for('sync') }}" class="btn btn-warning">SYNC</a>
+                <a href="{{ url_for('sync') }}" class="btn btn-warning">SYNC ALL SENSORS</a>
                 <br><br>
                 <form method="POST">
                     {{ form.hidden_tag() }}
@@ -55,9 +55,9 @@ Jars
                         
                         {% else %}
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Temperatura = offline</li>
-                                <li class="list-group-item">pH Faktor = offline</li>
-                                <li class="list-group-item">Vlažnost = offline</li>
+                                <li class="list-group-item">Temperatura = Offline</li>
+                                <li class="list-group-item">pH Faktor = Offline</li>
+                                <li class="list-group-item">Vlažnost = Offline</li>
                             </ul>
                         {% endif %}
 
@@ -74,7 +74,7 @@ Jars
                 <div class="card-body">
                     <a href="{{ url_for('jar_details', jar_id=jar.id) }}" class="btn btn-info">Details</a>
                     
-                    {% include'modal_delete.html' %}
+                    <a href="{{ url_for('jar_to_delete', jar_id=jar.id) }}" class="btn btn-danger">Delete</a>
 
                 </div>
             </div>

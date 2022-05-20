@@ -37,6 +37,8 @@ class Jar(db.Model):
     phf = db.Column(db.Integer, nullable=False, default=7)
     humidity = db.Column(db.Integer, nullable=False, default=44)
     
+    date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
 
 
 

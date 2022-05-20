@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-    Delete
+    Delete Jar
 </button>
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -15,7 +15,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="{{ url_for('delete_jar', jar_id=jar.id) }}" class="btn btn-danger">Delete</a>
+                <a href="{{ url_for('delete_jar', jar_id=jar.id) }}" class="btn btn-danger">Delete Jar</a>
             </div>
         </div>
     </div>

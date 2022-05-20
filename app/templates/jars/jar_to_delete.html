@@ -7,12 +7,6 @@ Jar Details
 {% block content %}
 
 <!-- POČETAK KARTICE -->
-<div class="container-sm">
-    <a href="{{ url_for('sync_jar', jar_id=jar.id) }}" class="btn btn-warning">SYNC JAR SENSORS</a>
-</div>
-
-<br>
-
 <div class="card mb-3" style="max-width: 1000px;">
     <div class="row g-0">
         <div class="col-md-4">
@@ -74,9 +68,8 @@ Jar Details
         
     </div>
     <div class="card-body">
-        <a href="{{ url_for('add_plant', jar_id=jar.id) }}" class="btn btn-info">Add Plant</a>
-        {% include 'modal_empty.html' %}
         <a href="{{ url_for('jars')}}" class="btn btn-secondary">Back to Jars</a>
+        {% include 'modal_delete.html' %}
     </div>
 </div>
 <!-- Kraj KARTICE -->

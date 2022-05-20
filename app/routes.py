@@ -3,7 +3,7 @@ from random import choice
 from flask import render_template, flash, url_for, redirect, request
 
 from . import app, db
-from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm
+from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm, DeleteJarForm
 from .models import User, Jar, Plant
 from . import get_all_readings
 
@@ -11,21 +11,24 @@ from . import get_all_readings
 #region USER ROUTES
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def login():
     
     form = LoginForm()
     
     if form.validate_on_submit():
+        
         user = User.query.filter_by(name=form.name.data).first()
+        
         if user:
-            flash(f'Dobrodošli { user.name } u IZ_PyFlora aplikaciju!', category='success')
-            return redirect(url_for('jars'))
+            if user.name == form.name.data and user.password == form.password.data:
+                flash(f'Loginacija uspješna!', category='success')
+                return redirect(url_for('jars'))
+            else:
+                flash('Pogrešno ime ili lozinka, pokušajte ponovno!', category='danger')
         else:
-            flash('Nepostojeći korisnik!', category='danger')
-            return redirect(url_for('index'))
-    
-    return render_template('home/index.html', 
-                            form=form)
+            flash('Nepostojeći korisnik, pokušajte ponovno!', category='danger')
+            
+    return render_template('home/login.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -34,18 +37,21 @@ def register():
     form = RegistrationForm()
     
     if form.validate_on_submit():
-        
-        user = User(
-            name = form.name.data,
-            password = form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Korisnik dodan u bazu!', category='success')
-        return redirect(url_for('index'))
+        user = User.query.filter_by(name=form.name.data).first()
+        if user:
+            flash(f'Greška, korisnik pod imenom {user.name} već postoji. Odaberite drugo ime!!', category='danger')
+        else:
+            user = User(
+                name=form.name.data, 
+                password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash(f'Registracija uspješna, korisnik {user.name} dodan u bazu!!', category='success')
+        form.name.data = ''
+        form.password.data = ''
+        form.confirm_password.data = ''
     
-    return render_template('home/register.html', 
-                            form=form)
-
+    return render_template('home/register.html', form=form)
 
 
 
@@ -72,17 +78,17 @@ def plant_details(plant_id, plant_name):
 @app.route('/jars', methods=['GET', 'POST'])
 def jars():
     
-    
     form = AddJarForm()
     
     one_jar = Jar()
     
     if form.validate_on_submit():
         one_jar.name = form.name.data
+        form.name.data = ''
         db.session.add(one_jar)
         db.session.commit()
         flash('Posuda dodana!', category='success')
-    
+
     jars = Jar.query.order_by(Jar.id)
     
     return render_template('jars/jars.html',
@@ -99,6 +105,17 @@ def jar_details(jar_id):
     return render_template('jars/jar_details.html',
                             jar = jar,
                             plant = plant)
+    
+
+@app.route('/jar_to_delete/<int:jar_id>')
+def jar_to_delete(jar_id):
+    
+    jar = Jar.query.get(jar_id)
+    plant = Plant.query.filter_by(name=jar.plant_name).first()
+    
+    return render_template('jars/jar_to_delete.html',
+                            jar = jar,
+                            plant = plant)
 
 
 @app.route('/jar/delete/<int:jar_id>', methods=['GET', 'POST'])
@@ -108,7 +125,7 @@ def delete_jar(jar_id):
     
     db.session.delete(jar)
     db.session.commit()
-    
+    flash('Posuda uklonjena!', category='danger')
     return redirect(url_for('jars'))
 
 
@@ -127,8 +144,9 @@ def add_plant(jar_id):
         jar.photo = plant.photo
         
         db.session.commit()
+        flash('Biljka dodana!', category='success')
         return redirect(url_for('jar_details', jar_id=jar.id))
-
+    
     all_plants = Plant.query.all()
     
     return render_template('jars/add_plant.html',
@@ -144,7 +162,7 @@ def empty_jar(jar_id):
     jar.photo = 'default.jpg'
     
     db.session.commit()
-    
+    flash('Posuda ispražnjena!', category='danger')
     return redirect(url_for('jar_details', jar_id=jar.id))
 
 
@@ -156,7 +174,7 @@ def sync():
     for jar in jars:
         readings = get_all_readings()
         jar.temperature = readings[0]
-        jar.pH_F = readings[1]
+        jar.phf = readings[1]
         jar.humidity = readings[2]
         
         db.session.commit()
@@ -171,7 +189,7 @@ def sync_jar(jar_id):
     readings = get_all_readings()
     
     jar.temperature = readings[0]
-    jar.pH_F = readings[1]
+    jar.phf = readings[1]
     jar.humidity = readings[2]
     
     db.session.commit()

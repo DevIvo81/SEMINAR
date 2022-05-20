@@ -9,7 +9,7 @@ class RegistrationForm(FlaskForm):
     name = StringField('Vaše ime', validators=[DataRequired(), Length(min=4, max=20)])
     password = PasswordField('Vaša lozinka', validators=[DataRequired(), Length(min=4, max=20)])
     confirm_password = PasswordField('Ponovite lozinku', 
-                                    validators=[DataRequired(), EqualTo('password')])
+                                    validators=[DataRequired(), EqualTo('password'), Length(min=4, max=20)])
     submit = SubmitField('Registriraj se')    
 
 
@@ -29,5 +29,8 @@ class AddPlantForm(FlaskForm):
 class AddJarForm(FlaskForm):
     name = StringField('Upišite lokaciju posude', validators=[DataRequired()])
     submit = SubmitField('Add New Jar')
+
+class DeleteJarForm(FlaskForm):
+    submit = SubmitField('Delete')
 
 #endregion PLANTS AND JARS   

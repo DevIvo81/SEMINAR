@@ -1,6 +1,14 @@
 # PyFlora
 ## Pametne teglice za cvijeće
 
+- na glavnom ekranu je prikaz senzora posude ('offline' ako nema biljke)
+- klik na 'Details' vodi na stranicu posude koja je odabrana
+- dostupno je 7 začinskih biljaka
+- karakteristike biljaka su odokativno napisane
+- SYNC uspoređuje tri simulirana mjerenja temperature, pH i vlage, te prema dostatnosti odnosno manjku određuje status
+
+### Upute za pokretanje aplikacije:
+
 - prvo instalirati virtualno okruženje unosom naredbe:
     "py -m venv venv_pyflora"
 
@@ -13,6 +21,12 @@
 
 - pokrenuti aplikaciju upisom naredbe: 
     "py run.py"
+
+
+## Izvori 
+
+- slike biljaka - 
+- 404 template - <a href="https://codepen.io/1832Manaswini/pen/Vwezyjx">LINK</a>
 
 
 
