@@ -25,8 +25,8 @@
 
 ## Izvori 
 
-- slike biljaka - 
-- 404 template - <a href="https://codepen.io/1832Manaswini/pen/Vwezyjx">LINK</a>
+- podaci o biljkama - https://www.agroklub.com/
+- 404 template - https://codepen.io/1832Manaswini/pen/Vwezyjx
 
 
 
