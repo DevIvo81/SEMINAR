@@ -12,7 +12,7 @@
     
     <!-- Our CSS styles-->
     <link href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/404.css')}}" rel="stylesheet">
+    <!-- <link href="{{ url_for('static', filename='css/404.css')}}" rel="stylesheet"> -->
 
     <!-- Favicon -->
     <link rel="icon" href="{{ url_for('static', filename='pics/hypnotize.svg') }}">
@@ -22,10 +22,10 @@
 </head>
 
 <body>
-    <header>
-        {% include 'navbar.html' %}
-    </header>
-    <br>
+    
+    {% include 'navbar.html' %}
+    
+    <br><br>
     <div class="container">
         
         {% include'./flashes.html' %}
@@ -45,7 +45,7 @@
 
         <!-- Our JS -->
         <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/404.js') }}"></script>
+        <!-- <script src="{{ url_for('static', filename='js/404.js') }}"></script> -->
         
         <!-- Date and Time formatting on html pages -->
         {{ moment.include_moment() }}

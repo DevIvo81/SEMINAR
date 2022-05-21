@@ -129,6 +129,7 @@ env.bak/
 venv.bak/
 venv_pyflora/
 my_files/
+migrations/
 
 # Spyder project settings
 .spyderproject

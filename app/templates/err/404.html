@@ -1,42 +1,55 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Our CSS styles-->
+    <link href="{{ url_for('static', filename='css/404.css')}}" rel="stylesheet">
 
-{% block title %}
-    404 - Page Not Found
-{% endblock title %}
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='pics/hypnotize.svg') }}">
 
+    <title>404 - Page Not Found</title>
 
-{% block content %}
+</head>
 
-<br>
-<div class="container">
-    <h1 class="first-four">4</h1>
-    <div class="cog-wheel1">
-        <div class="cog1">
-            <div class="top"></div>
-            <div class="down"></div>
-            <div class="left-top"></div>
-            <div class="left-down"></div>
-            <div class="right-top"></div>
-            <div class="right-down"></div>
-            <div class="left"></div>
-            <div class="right"></div>
+<body>
+
+    <div class="container">
+        <h1 class="first-four">4</h1>
+        <div class="cog-wheel1">
+            <div class="cog1">
+                <div class="top"></div>
+                <div class="down"></div>
+                <div class="left-top"></div>
+                <div class="left-down"></div>
+                <div class="right-top"></div>
+                <div class="right-down"></div>
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
         </div>
+    
+        <div class="cog-wheel2">
+            <div class="cog2">
+                <div class="top"></div>
+                <div class="down"></div>
+                <div class="left-top"></div>
+                <div class="left-down"></div>
+                <div class="right-top"></div>
+                <div class="right-down"></div>
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+        </div>
+        <h1 class="second-four">4</h1>
+        <p class="wrong-para"><a href="{{ url_for('jars') }}"> Uh Oh! Page not found! Click to go back to "Jars"</a></p>
     </div>
 
-    <div class="cog-wheel2">
-        <div class="cog2">
-            <div class="top"></div>
-            <div class="down"></div>
-            <div class="left-top"></div>
-            <div class="left-down"></div>
-            <div class="right-top"></div>
-            <div class="right-down"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-        </div>
-    </div>
-    <h1 class="second-four">4</h1>
-    <p class="wrong-para">Uh Oh! Page not found!</p>
-</div>
+    <!-- Our JS -->
+    <script src="{{ url_for('static', filename='js/404.js') }}"></script>
 
-{% endblock content %}
+</body>
+</html>
