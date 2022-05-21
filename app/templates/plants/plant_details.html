@@ -14,16 +14,21 @@ Plant Details
     <div class="card mb-3" style="max-width: 800px;">
         <div class="row g-0">
             <!-- IMAGE -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <img src="{{ url_for('static', filename='pics/' + plant.photo) }}" class="img-fluid rounded-start m-2" alt="...">
             </div>
-            <div class="col-md-4">
+            <div class="col">
                 <div class="card-body">
                     <h5 class="card-title">{{ plant.name }}</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Temperatura = {{ plant.temperature }} °C</li>
                         <li class="list-group-item">pH = {{ plant.phf }}</li>
                         <li class="list-group-item">Vlažnost = {{ plant.humidity }} %</li>
+                        <li class="list-group-item">
+                            <div class="container-sm">
+                                {{ plant.details }}
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

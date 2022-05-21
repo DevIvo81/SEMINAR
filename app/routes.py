@@ -1,6 +1,7 @@
+import json
 from datetime import datetime
 from random import choice
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, jsonify
 
 from . import app, db
 from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm, DeleteJarForm
@@ -195,6 +196,18 @@ def sync_jar(jar_id):
     db.session.commit()
     
     return redirect(url_for('jar_details', jar_id=jar.id))
+
+@app.route('/plants/api')
+def plants_api():
+    
+    json_list = []
+    
+    pls = Plant.query.order_by(Plant.id)
+    
+    for p in pls:
+        json_list.append(p.to_dict())
+    
+    return jsonify(json_list)
 
 #endregion PLANTS AND JARS
 

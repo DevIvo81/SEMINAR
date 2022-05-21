@@ -8,6 +8,8 @@ from .repository import get_all_readings
 #region CONFIGS
 app = Flask(__name__)
 
+app.config['JSON_AS_ASCII'] = False
+app.config["JSON_SORT_KEYS"] = False
 app.config['UPLOAD_FOLDER'] = 'static/pics'
 # SQLITE DB CONNECTION
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/DEJTA.sqlite'

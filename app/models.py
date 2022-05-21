@@ -15,7 +15,7 @@ class Plant(db.Model):
     
     name = db.Column(db.String(300), nullable=False, default='Plantless')
     photo = db.Column(db.String(300), nullable=False, default='default.jpg')
-    details = db.Column(db.Text, default='Malo tekta o biljci ovdje...')
+    details = db.Column(db.Text, default='Malo teksta o biljci ovdje...')
 
     temperature = db.Column(db.Integer, nullable=False, default=10)
     phf = db.Column(db.Integer, nullable=False, default=7)
@@ -23,6 +23,18 @@ class Plant(db.Model):
     
     def __repr__(self):
         return f"<Plant(id='{self.id}', name='{self.name}', photo='{self.photo}')>"
+    
+    
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'name' : self.name, 
+            'photo' : self.photo,
+            'details' : self.details,
+            'temperature' : self.temperature,
+            'phf' : self.phf,
+            'humidity' : self.humidity, 
+        }
     
     
 
