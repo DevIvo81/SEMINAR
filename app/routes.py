@@ -1,6 +1,9 @@
+import os
+import secrets
+from PIL import Image
 from datetime import datetime
 from flask import render_template, flash, url_for, redirect, jsonify, request
-
+from werkzeug.utils import secure_filename
 
 from . import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm, DeleteJarForm, NewPlantForm
@@ -89,6 +92,7 @@ def plant_details(plant_id, plant_name):
     return render_template('plants/plant_details.html',
                             plant = plant)
 
+
 @app.route("/new_plant", methods=['GET', 'POST'])
 @login_required
 def new_plant():
@@ -96,8 +100,13 @@ def new_plant():
     form = NewPlantForm()
     
     if form.validate_on_submit():
+        
+        #...Saving uploaded picture to 'static/pics'
+        photo_name = secure_filename(form.photo.data.filename)
+        form.photo.data.save(os.getcwd() + '/app/static/pics/' + photo_name)
+        
         new_plant = Plant(
-            name = form.name.data,
+            name = form.name.data.capitalize(),
             photo = form.photo.data.filename,
             details = form.details.data,
             temperature = form.temperature.data,

@@ -34,7 +34,7 @@ class NewPlantForm(FlaskForm):
     name = StringField('Upišite ime biljke', validators=[DataRequired()])
     photo = FileField('Dodajte fotografiju', 
                         validators=[FileRequired(), 
-                                    FileAllowed(['jpg, png, svg'], message="File ext not allowed!   ")])
+                                    FileAllowed(['jpg', 'png', 'svg', 'gif', 'bmp'], message="File ext not allowed!")])
     details = TextAreaField('Tekst o biljci', 
                             validators=[DataRequired()])
     temperature = IntegerField('Upiši najnižu temperaturu za biljku', validators=[DataRequired()])

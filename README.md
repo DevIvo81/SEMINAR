@@ -1,11 +1,6 @@
 # PyFlora
 ## Pametne teglice za cvijeće
 
-- na glavnom ekranu je prikaz senzora posude ('offline' ako nema biljke)
-- klik na 'Details' vodi na stranicu posude koja je odabrana
-- dostupno je 7 začinskih biljaka
-- karakteristike biljaka su odokativno napisane
-- SYNC uspoređuje tri simulirana mjerenja temperature, pH i vlage, te prema dostatnosti odnosno manjku određuje status
 
 ### Upute za pokretanje aplikacije:
 
@@ -23,10 +18,41 @@
     "py run.py"
 
 
+
+### O IZ_PyFlora aplikaciji: 
+
+- pokretanje aplikacije vas vodi na Login stranicu. U aplikaciju se ne može ući bez autentifikacije korisnika. U bazi postoji jedan korisnik.
+name : Korisnik
+password : lozinka
+
+- ako se želite registrirati na dnu je link na stranicu za registraciju.
+
+- na glavnom ekranu je prikaz senzora posude ('offline' ako u posudi nema biljke)
+
+- SYNC vrši nasumičnu promjenu vrijednosti senzora temperature, pH i vlage u svim posudama.
+
+- u rubriku 'Add New Jar' se upisuje lokacija posude koja se dodaje
+
+- klik na 'Delete' vodi na stranicu posude za brisanje kao dodatni korak prije potvrde.
+
+- klik na 'Details' vodi na stranicu posude koja je odabrana. U posudu je moguće staviti biljku iz baze biljaka i isprazniti posudu, dok 'SYNC JAR' simulira vrijednosti senzora posude te uspoređuje mjerenja temperature, pH i vlage senzora s posude/a te prema dostatnosti odnosno manjku u usporedbi s podacima o biljci određuje status.
+
+- klik na ime biljke otvara novi prozor s podacima o biljci.
+
+- u bazi je 11 začinskih biljaka
+
+- moguće je dodavati nove biljke i pripadajuću im sliku
+
+- biljke je moguće i brisati iz baze, ali molim da ako se taj link koristi da se podaci o biljci kopiraju i da se biljka ponovno doda u bazu.
+
+- karakteristike biljaka su odokativno napisane
+
+
 ## Izvori 
 
 - podaci o biljkama - https://www.agroklub.com/
 - 404 template - https://codepen.io/1832Manaswini/pen/Vwezyjx
+- ostali predlošci - https://getbootstrap.com/
 
 
 

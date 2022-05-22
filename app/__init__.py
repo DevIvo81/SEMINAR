@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
@@ -12,7 +13,7 @@ app = Flask(__name__)
 
 app.config['JSON_AS_ASCII'] = False
 app.config["JSON_SORT_KEYS"] = False
-app.config['UPLOAD_FOLDER'] = 'static/pics'
+app.config['UPLOAD_FOLDER'] = '/static/pics/'
 # SQLITE DB CONNECTION
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/DEJTA.sqlite'
 
