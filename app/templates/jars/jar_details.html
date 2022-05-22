@@ -13,10 +13,10 @@ Jar Details
 
 <br>
 
-<div class="card mb-3" style="max-width: 1000px;">
+<div class="card mb-1" style="max-width: 1200px;">
     <div class="row g-0">
         <div class="col-md-4">
-            <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2" alt="...">
+            <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2 max-width-300 max-height-300" alt="...">
         </div>
         <div class="col-md-6">
             <div class="card-body">
@@ -34,38 +34,39 @@ Jar Details
                 
                 <br><br>
                 <ul class="list-group">
+                    <li class="list-group-item text-center">SENZORI POSUDE:</li>
                     <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
                     <li class="list-group-item">pH Faktor = {{ jar.phf }}</li>
                     <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
                     
                     <br><br>
-                
+                    <li class="list-group-item text-center">STATUSI:</li>
                     {% if jar.plant_name != 'Plantless' %}    
                     
                     {% if jar.temperature < plant.temperature %}
-                        <li class="list-group-item">STATUS Temperature = PREHLADNO</li>
+                        <li class="list-group-item">Temperatura = PREHLADNO</li>
                     {% else %}
-                        <li class="list-group-item">STATUS Temperature = U REDU</li>
+                        <li class="list-group-item">Temperatura = U REDU</li>
                     {% endif %}
                     
                     
                     {% if jar.phf < plant.phf %}
-                        <li class="list-group-item">STATUS pH = DODATI SUPSTRAT</li>
+                        <li class="list-group-item">pH = DODATI SUPSTRAT</li>
                     {% else %}
-                        <li class="list-group-item">STATUS pH = U REDU</li>
+                        <li class="list-group-item">pH = U REDU</li>
                     {% endif %}
                     
 
                     {% if jar.humidity < plant.humidity %}
-                        <li class="list-group-item">STATUS Vlage = DODATI VODE</li>   
+                        <li class="list-group-item">Vlaga = DODATI VODE</li>   
                     {% else %}
-                        <li class="list-group-item">STATUS Vlage = U REDU</li>    
+                        <li class="list-group-item">Vlaga = U REDU</li>    
                     {% endif %}
                 
                 {% else %}
-                    <li class="list-group-item">STATUS Temperature = Offline</li>
-                    <li class="list-group-item">STATUS pH = Offline</li>
-                    <li class="list-group-item">STATUS Vlage = Offline</li>
+                    <li class="list-group-item">Temperatura = Offline</li>
+                    <li class="list-group-item">pH = Offline</li>
+                    <li class="list-group-item">Vlaga = Offline</li>
                 {% endif %}
                     
                 </ul>

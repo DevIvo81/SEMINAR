@@ -1,7 +1,13 @@
 from datetime import datetime
-from . import db
+from . import db, login_manager
+from flask_login import UserMixin
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(20), nullable=False)
@@ -35,6 +41,9 @@ class Plant(db.Model):
             'phf' : self.phf,
             'humidity' : self.humidity, 
         }
+        
+    def plant_data(self):
+        return [self.temperature, self.phf, self.humidity]
     
     
 
@@ -52,5 +61,8 @@ class Jar(db.Model):
     
     def __repr__(self):
         return f"<Jar(id='{self.id}', name='{self.name}', photo='{self.photo}')>"
+    
+    def jar_data(self):
+        return [self.temperature, self.phf, self.humidity]
 
 

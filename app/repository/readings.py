@@ -8,7 +8,7 @@ def get_all_readings():
     phs = [x for x in range(3, 15)]
     ph = choice(phs)
 
-    humidities = [x for x in range(30, 100)]
+    humidities = [x for x in range(15, 90)]
     hum = choice(humidities)
     
-    return temp, ph, hum
+    return [temp, ph, hum]

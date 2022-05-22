@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Plant Details
+Delete Plant
 {% endblock %}
 
 
 {% block content %}
 
-    <h4>Plant Details</h4>
+<h2>Brisanje biljke br. {{ plant.id }} iz baze</h2>
     
     <!-- Content Row-->
     <!-- POČETAK KARTICE -->
@@ -38,6 +38,7 @@ Plant Details
 
     <div class="card-body">
         <a href="{{ url_for('plants') }}" class="btn btn-info">Back to plants</a>
+        {% include 'modal_delete_p.html' %}
     </div>
     
     <br>

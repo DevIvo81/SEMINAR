@@ -1,5 +1,8 @@
 # POKUŠAJI
 
+
+
+
 # temperatura = [x/10 for x in range(100, 355, 5)]
 
 # vlaga = [x for x in range(33, 101)]
