@@ -15,10 +15,10 @@ Jar Details
 
 <div class="card mb-1" style="max-width: 1200px;">
     <div class="row g-0">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <img src="{{ url_for('static', filename='pics/' + jar.photo) }}" class="img-fluid rounded-start m-2 max-width-300 max-height-300" alt="...">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card-body">
                 <h4 class="card-title">{{ jar.name|capitalize }}</h4>
                 
@@ -26,7 +26,7 @@ Jar Details
                 
                 {% if plant %}
                     <a href="{{ url_for('plant_details', plant_id=plant.id, plant_name=plant.name) }}" target="_blank">
-                        <h5>{{ plant.name }}
+                        <h5>{{ plant.name }}</h5>
                     </a>
                 {% else %}
                     <h5>Plantless</h5>
@@ -68,10 +68,19 @@ Jar Details
                     <li class="list-group-item">pH = Offline</li>
                     <li class="list-group-item">Vlaga = Offline</li>
                 {% endif %}
-                    
                 </ul>
             </div>
         </div>
+        {% if plant %}
+            <div class="col md-4">
+                <img src="{{ url_for('static', filename='pics/chart.png') }}" class="img-fluid rounded-start m-2 max-width-300 max-height-300" alt="...">
+            </div>
+        {% else %}
+        <div class="col md-4">
+            <img src="{{ url_for('static', filename='pics/chart_blank.png') }}" class="img-fluid rounded-start m-2 max-width-300 max-height-300" alt="...">
+        </div>
+        {% endif %}
+        
         
     </div>
     <div class="card-body">

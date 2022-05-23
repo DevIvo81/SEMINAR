@@ -12,7 +12,7 @@ Jars
         <div class="text-end">
         
             <div class="container-sm">
-                <a href="{{ url_for('sync') }}" class="btn btn-warning">SYNC ALL SENSORS</a>
+                <a href="{{ url_for('sync') }}" class="btn btn-warning">CHANGE SENSOR VALUES</a>
                 <br><br>
                 <form method="POST">
                     {{ form.hidden_tag() }}
@@ -46,21 +46,19 @@ Jars
                             <h5 class="card-title">{{ jar.plant_name }}</h5>
                             
                             <br>
-                        {% if jar.plant_name != 'Plantless' %}
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
-                                <li class="list-group-item">pH Faktor = {{ jar.phf }}</li>
-                                <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
-                            </ul>
-                        
-                        {% else %}
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Temperatura = Offline</li>
-                                <li class="list-group-item">pH Faktor = Offline</li>
-                                <li class="list-group-item">Vlažnost = Offline</li>
-                            </ul>
-                        {% endif %}
-
+                            {% if jar.plant_name != 'Plantless' %}
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Temperatura = {{ jar.temperature }}°C</li>
+                                    <li class="list-group-item">pH Faktor = {{ jar.phf }}</li>
+                                    <li class="list-group-item">Vlažnost = {{ jar.humidity }}%</li>
+                                </ul>
+                            {% else %}
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Temperatura = Offline</li>
+                                    <li class="list-group-item">pH Faktor = Offline</li>
+                                    <li class="list-group-item">Vlažnost = Offline</li>
+                                </ul>
+                            {% endif %}
                         </div>
 
                     </div>

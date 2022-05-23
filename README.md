@@ -27,15 +27,15 @@ password : lozinka
 
 - ako se želite registrirati na dnu je link na stranicu za registraciju.
 
-- na glavnom ekranu je prikaz senzora posude ('offline' ako u posudi nema biljke)
+- na glavnom ekranu je prikaz posuda i senzora posude ('offline' ako u posudi nema biljke)
 
-- SYNC vrši nasumičnu promjenu vrijednosti senzora temperature, pH i vlage u svim posudama.
+- CHANGE SENSOR VALUES vrši nasumičnu promjenu vrijednosti senzora temperature, pH i vlage u svim posudama.
 
 - u rubriku 'Add New Jar' se upisuje lokacija posude koja se dodaje
 
 - klik na 'Delete' vodi na stranicu posude za brisanje kao dodatni korak prije potvrde.
 
-- klik na 'Details' vodi na stranicu posude koja je odabrana. U posudu je moguće staviti biljku iz baze biljaka i isprazniti posudu, dok 'SYNC JAR' simulira vrijednosti senzora posude te uspoređuje mjerenja temperature, pH i vlage senzora s posude/a te prema dostatnosti odnosno manjku u usporedbi s podacima o biljci određuje status.
+- klik na 'Details' vodi na stranicu posude koja je odabrana. U posudu je moguće staviti biljku iz baze biljaka i isprazniti posudu, dok 'SYNC JAR' nasumično mijenja simulirane vrijednosti senzora posude te uspoređuje mjerenja temperature, pH i vlage senzora s posude/a te prema dostatnosti odnosno manjku u usporedbi s podacima o biljci određuje status. Usporedbe su prikazane i u histogramu sa strane. Ako nema biljke u posudi histogram je prazan.
 
 - klik na ime biljke otvara novi prozor s podacima o biljci.
 
@@ -51,7 +51,11 @@ password : lozinka
 ## Izvori 
 
 - podaci o biljkama - https://www.agroklub.com/
+
 - 404 template - https://codepen.io/1832Manaswini/pen/Vwezyjx
+
+- Smart Pot image (vidljiv vodeni žig na default.jpg)- https://www.dreamstime.com/smart-pot-watering-icon-simple-color-outline-vector-elements-automated-farming-icons-ui-ux-website-mobile-image189609777#_
+
 - ostali predlošci - https://getbootstrap.com/
 
 

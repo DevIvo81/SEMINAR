@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from . import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm, AddPlantForm, AddJarForm, DeleteJarForm, NewPlantForm
 from .models import User, Jar, Plant
-from . import get_all_readings
+from . import get_all_readings, generate_chart
 from flask_login import login_user, current_user, logout_user, login_required
 
 #region USER ROUTES
@@ -223,8 +223,9 @@ def add_plant(jar_id):
         jar.photo = plant.photo
         
         db.session.commit()
+        
         flash(f'Biljka {plant.name} posađena u posudu na lokaciji {jar.name}..!', category='success')
-        return redirect(url_for('jar_details', jar_id=jar.id))
+        return redirect(url_for('sync_jar', jar_id=jar.id))
     
     all_plants = Plant.query.all()
     
@@ -272,6 +273,10 @@ def sync_jar(jar_id):
     jar.humidity = readings[2]
     
     db.session.commit()
+    plant = Plant.query.filter_by(name=jar.plant_name).first()
+    if plant:
+        p_data = plant.plant_data()
+        generate_chart(readings, p_data)
     
     return redirect(url_for('jar_details', jar_id=jar.id))
 
