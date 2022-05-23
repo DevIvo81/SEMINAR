@@ -21,14 +21,14 @@
 - potom instalirati module unosom naredbe:
     "pip install -r requirements.txt"
 
-- u Visual Studio Code postaviti interpreter s oznakom('venv_pyflora':venv)       \venv_pyflora\Scripts\Python.exe
+- u Visual Studio Code odnoosno Python IDE-u prvo postaviti interpreter s oznakom ('venv_pyflora':venv)  \venv_pyflora\Scripts\Python.exe
 
 - pokrenuti aplikaciju upisom naredbe: 
     "py run.py"
     ili
     "python run.py"
 
-
+- u internet preglednik, koji koristite upišite adresu http://127.0.0.0:5000 Ctrl+click na "http://127.0.0.0:5000" ili 
 
 ### O IZ_PyFlora aplikaciji: 
 
@@ -38,7 +38,7 @@ password : lozinka
 
 - ako se želite registrirati na dnu je link na stranicu za registraciju.
 
-- na glavnom ekranu je prikaz posuda i senzora posude ('offline' ako u posudi nema biljke)
+- na glavnom ekranu je prikaz posuda i senzora posude ('offline' ako u posudi nema biljke).
 
 - CHANGE SENSOR VALUES vrši nasumičnu promjenu vrijednosti senzora temperature, pH i vlage u svim posudama.
 
@@ -50,13 +50,13 @@ password : lozinka
 
 - klik na ime biljke otvara novi prozor s podacima o biljci.
 
-- u bazi je 11 začinskih biljaka
+- u bazi je 11 začinskih biljaka.
 
-- moguće je dodavati nove biljke i pripadajuću im sliku
+- moguće je dodavati nove biljke i pripadajuću im sliku.
 
 - biljke je moguće i brisati iz baze, ali molim da ako se taj link koristi da se podaci o biljci kopiraju i da se biljka ponovno doda u bazu.
 
-- karakteristike biljaka su odokativno napisane
+- karakteristike biljaka su odokativno napisane.
 
 
 ## Izvori 
