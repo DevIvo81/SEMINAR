@@ -5,10 +5,18 @@
 
 ### Upute za pokretanje aplikacije:
 
-- prvo instalirati virtualno okruženje unosom naredbe:
-    "py -m venv venv_pyflora"
+- klonirati repozitorij na računalo. Ako kao lokaciju odaberete C:\User repozitorij će biti u direktoriju C:\User\SEMINAR\
 
-- direktorij venv_pyflora/ je naveden u ".gitignore" datoteci
+- U tom direktoriju prvo instalirati virtualno okruženje unosom naredbe:
+    "C:\User\SEMINAR\py -m venv venv_pyflora"
+    ili
+    "python -m venv venv_pyflora"
+
+- u istom direktoriju aktivirati virtualno okruženje unosom naredbe:
+-  Windows - C:\User\SEMINAR\venv_pyflora\Scripts\activate **ili samo** .\venv_pyflora\Scripts\activate 
+-  MacOS - source venv_pyflora/bin/activate
+
+- direktorij venv_pyflora/ je naveden u ".gitignore" datoteci. pa se ne commita na github
 
 - potom instalirati module unosom naredbe:
     "pip install -r requirements.txt"
@@ -17,6 +25,8 @@
 
 - pokrenuti aplikaciju upisom naredbe: 
     "py run.py"
+    ili
+    "python run.py"
 
 
 
