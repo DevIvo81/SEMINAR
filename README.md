@@ -1,6 +1,7 @@
-# PyFlora
+# IZ_PyFlora
 ## Pametne teglice za cvijeće
-
+## Autor: Ivo Zelić
+## Platforma izrade: Python - Flask
 
 ### Upute za pokretanje aplikacije:
 
